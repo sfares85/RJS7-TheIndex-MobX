@@ -27,7 +27,7 @@ class AuthorStore {
     return this.authors.filter(author =>
       `${author.first_name} ${author.last_name}`
         .toLowerCase()
-        .includes(this.query)
+        .includes(this.query.toLowerCase())
     );
   }
 
