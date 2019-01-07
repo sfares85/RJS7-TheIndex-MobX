@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 class BookRow extends Component {
   render() {
     const book = this.props.book;
+
     const authors = book.authors.map(author => (
       <div key={author.name}>
         <Link to={`/authors/${author.id}`}>{author.name}</Link>
       </div>
     ));
+
     const availableButton = (
       <button
         className={`btn btn-${book.available ? "success" : "danger"}`}
@@ -19,6 +21,7 @@ class BookRow extends Component {
         {book.available ? "borrow" : "return"}
       </button>
     );
+
     return (
       <tr>
         <td>{availableButton}</td>

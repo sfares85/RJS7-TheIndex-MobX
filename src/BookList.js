@@ -39,12 +39,10 @@ class BookList extends Component {
 
   render() {
     const bookColor = this.props.match.params.bookColor;
-    let books;
+    let books = this.state.books;
     let allBooksButton;
 
-    if (!bookColor) {
-      books = this.state.books;
-    } else {
+    if (bookColor) {
       books = this.filterBooksByColor(bookColor);
       allBooksButton = (
         <Link to="/books">
@@ -56,7 +54,7 @@ class BookList extends Component {
     return this.state.loading ? (
       <Loading />
     ) : (
-      <div className="books">
+      <div>
         <h3>Books</h3>
         <SearchBar store={{}} />
         {allBooksButton}

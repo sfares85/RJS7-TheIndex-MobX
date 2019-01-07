@@ -15,7 +15,7 @@ class AuthorsList extends Component {
     ));
 
     return (
-      <div className="authors">
+      <div>
         <h3>Authors</h3>
         <SearchBar store={authorStore} />
         <div className="row">{authorCards}</div>
