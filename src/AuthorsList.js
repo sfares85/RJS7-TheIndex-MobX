@@ -10,7 +10,7 @@ import authorStore from "./stores/authorStore";
 
 function AuthorsList() {
   const authorCards = authorStore.filteredAuthors.map(author => (
-    <AuthorCard key={author.first_name + author.last_name} author={author} />
+    <AuthorCard key={author.id} author={author} />
   ));
 
   return (
