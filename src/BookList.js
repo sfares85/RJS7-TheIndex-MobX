@@ -12,43 +12,35 @@ const instance = axios.create({
 });
 
 class BookList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      books: [],
-      loading: true
-    };
+  state = {
+    books: [],
+    loading: true
+  };
+
+  async componentDidMount() {
+    try {
+      const res = await instance.get(
+        "https://the-index-api.herokuapp.com/api/books/"
+      );
+      const books = res.data;
+      this.setState({
+        books,
+        loading: false
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
-  componentDidMount() {
-    instance
-      .get("https://the-index-api.herokuapp.com/api/books/")
-      .then(res => res.data)
-      .then(books =>
-        this.setState({
-          books,
-          loading: false
-        })
-      )
-      .catch(err => console.error(err));
-  }
-
-  filterBooksByColor(bookColor) {
-    return this.state.books.filter(book => book.color === bookColor);
-  }
+  filterBooksByColor = bookColor =>
+    this.state.books.filter(book => book.color === bookColor);
 
   render() {
     const bookColor = this.props.match.params.bookColor;
     let books = this.state.books;
-    let allBooksButton;
 
     if (bookColor) {
       books = this.filterBooksByColor(bookColor);
-      allBooksButton = (
-        <Link to="/books">
-          <button className="btn">All Books</button>
-        </Link>
-      );
     }
 
     return this.state.loading ? (
@@ -57,7 +49,6 @@ class BookList extends Component {
       <div>
         <h3>Books</h3>
         <SearchBar store={{}} />
-        {allBooksButton}
         <BookTable books={books} />
       </div>
     );

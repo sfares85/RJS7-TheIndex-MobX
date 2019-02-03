@@ -13,7 +13,7 @@ import BookList from "./BookList";
 import authorStore from "./stores/authorStore";
 
 class App extends Component {
-  getView() {
+  getView = () => {
     if (authorStore.loading) {
       return <Loading />;
     } else {
@@ -26,7 +26,7 @@ class App extends Component {
         </Switch>
       );
     }
-  }
+  };
 
   render() {
     return (

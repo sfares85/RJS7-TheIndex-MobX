@@ -6,22 +6,22 @@ const instance = axios.create({
 });
 
 class AuthorStore {
-  constructor() {
-    this.authors = [];
-    this.loading = true;
-    this.query = "";
-  }
+  authors = [];
 
-  fetchAuthors() {
-    return instance
-      .get("/api/authors/")
-      .then(res => res.data)
-      .then(authors => {
-        this.authors = authors;
-        this.loading = false;
-      })
-      .catch(err => console.error(err));
-  }
+  loading = true;
+
+  query = "";
+
+  fetchAuthors = async () => {
+    try {
+      const res = await instance.get("/api/authors/");
+      const authors = res.data;
+      this.authors = authors;
+      this.loading = false;
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   get filteredAuthors() {
     return this.authors.filter(author =>
@@ -31,9 +31,7 @@ class AuthorStore {
     );
   }
 
-  getAuthorById(id) {
-    return this.authors.find(author => +author.id === +id);
-  }
+  getAuthorById = id => this.authors.find(author => +author.id === +id);
 }
 
 decorate(AuthorStore, {
