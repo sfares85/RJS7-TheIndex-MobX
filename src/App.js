@@ -10,7 +10,7 @@ import AuthorDetail from "./AuthorDetail";
 import BookList from "./BookList";
 
 // Store
-import authorStore from "./stores/AuthorStore";
+import authorStore from "./stores/authorStore";
 
 class App extends Component {
   getView() {
