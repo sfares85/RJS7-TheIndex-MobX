@@ -1,5 +1,6 @@
 import { decorate, observable, computed } from "mobx";
 import axios from "axios";
+import { async } from "q";
 
 const instance = axios.create({
   baseURL: "https://the-index-api.herokuapp.com"
@@ -9,8 +10,10 @@ class AuthorStore {
   authors = [];
 
   loading = true;
+  authorloading = true;
 
   query = "";
+  author = null;
 
   fetchAuthors = async () => {
     try {
@@ -18,6 +21,16 @@ class AuthorStore {
       const authors = res.data;
       this.authors = authors;
       this.loading = false;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  fetchAuthorById = async id => {
+    try {
+      const res = await instance.get(`/api/authors/${id}`);
+      const author = res.data;
+      this.author = author;
+      this.authorloading = false;
     } catch (err) {
       console.error(err);
     }
@@ -35,8 +48,10 @@ class AuthorStore {
 }
 
 decorate(AuthorStore, {
+  author: observable,
   authors: observable,
   loading: observable,
+  authorloading: observable,
   query: observable,
   filteredAuthors: computed
 });
